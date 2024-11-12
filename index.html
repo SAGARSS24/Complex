@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Protein-Ligand Complex Viewer</title>
+  <!-- Load PV library from the official source -->
+  <script src="https://biasmv.github.io/pv/js/pv.min.js"></script>
+</head>
+<body>
+  <h1>Interactive Protein-Ligand Complex</h1>
+  <!-- The div where the viewer will be rendered -->
+  <div id="protein-viewer" style="width: 800px; height: 600px;"></div>
+  
+  <script>
+    // Initialize the PV viewer
+    var viewer = pv.Viewer(document.getElementById('protein-viewer'), {
+      width: 'auto',
+      height: 'auto',
+      antialias: true,
+      outline: true
+    });
+
+    // Load your PDB file from an online URL
+    viewer.loadPdb('https://raw.githubusercontent.com/SAGARSS24/PDBs/main/mtbca1_AAZ.pdb', function(structure) {
+      // Set the display style for the protein as cartoon
+      viewer.cartoon('protein', structure, { color: pv.color.ssSuccession() });
+      
+      // Display the ligand as balls and sticks
+      viewer.ballsAndSticks('ligand', structure.select({ rnames: ['AAZ'] }));
+      
+      // Automatically zoom to fit the structure in the viewer
+      viewer.autoZoom();
+    });
+  </script>
+</body>
+</html>
